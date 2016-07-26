@@ -1,0 +1,23 @@
+{
+  "name": "lazr",
+  "version": "1.0.0",
+  "description": "Direct S3 Uploads",
+  "main": "index.js",
+  "scripts": {
+    "test": "node js/test/test-signature.js"
+  },
+  "author": "ISL <dev@isl.co>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=6"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.4.9",
+    "stampit": "^2.1.1"
+  },
+  "devDependencies": {
+    "dotenv": "^2.0.0",
+    "restify": "^4.1.1",
+    "tape": "^4.6.0"
+  }
+}
