@@ -1,6 +1,7 @@
 
 const aws = require('aws-sdk')
 const component = require('stampit')
+const P = require('bluebird')
 
 const Signature = component()
   .init(function({ instance }) {
@@ -8,8 +9,23 @@ const Signature = component()
     this._params = instance.params || {}
   })
   .methods({
-    configure({ Expires, ContentType, Key, ACL, Bucket }) {
-
+    gen() {
+      return new P((resolve, reject) => {
+        if (!this.isConfigured()) {
+          return reject(`You must configure a key for this signature`)
+        }
+        this._s3.getSignedUrl('putObject', this._params, (err, data) => {
+          if (err) {
+            return reject(err)
+          }
+          const bucket = this._params.Bucket
+          const key = this._params.Key
+          resolve({
+            signedRequest: data,
+            url: `https://${bucket}.s3.amazon.com/${key}`
+          })
+        })
+      })
     },
 
     isConfigured() {
