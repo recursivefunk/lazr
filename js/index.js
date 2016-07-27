@@ -1,7 +1,7 @@
 
 exports.client= () => {
   // Uploader for the browser
-  return require('./lazr')
+  return require('./client')
 }
 exports.signature = require('./signature')
 exports.attach = require('./middleware')
