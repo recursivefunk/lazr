@@ -11,6 +11,8 @@ export AMAZON_SECRET_ACCESS_KEY=mysecretaccesskey
 export LAZR_BUCKET=mybucket
 ```
 
+To generate signatures yourself
+
 ```javascript
 const Signature = require('lazr').signature
 
@@ -34,4 +36,16 @@ app.get('/signature', (req, res) => {
       res.status(500).send(err)
     })
 })
+```
+
+Attach to your express server
+
+```javascript
+const express = require('express')
+const Lazr = require('lazr')
+const server = app.listen(3000)
+
+// Requests to /lazr/signature/?filename=foo.png will generate 
+// an upload signature and url and return it via the response
+Lazr.attach(app, [path='/lazr/signature']/*path is optional*/)
 ```
