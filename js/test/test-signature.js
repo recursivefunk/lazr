@@ -21,7 +21,7 @@ test('signature generation works', (t) => {
   Lazr.genSig({ params })
     .then((result) => {
       const accessKey = process.env.AMAZON_ACCESS_KEY_ID
-      const expectedUrl = `https://${bucket}.s3.amazon.com/${key}`
+      const expectedUrl = `https://s3.amazonaws.com/${bucket}/${key}`
       const signedPrefix = `${expectedUrl}?AWSAccessKeyId=${accessKey}`
       const prefixIndex = result.signedRequest.indexOf(signedPrefix)
       t.equal(result.url, expectedUrl, 'url is correct')

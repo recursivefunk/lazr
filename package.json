@@ -2,7 +2,7 @@
   "name": "lazr",
   "version": "1.0.0",
   "description": "Direct S3 Uploads",
-  "main": "index.js",
+  "main": "js/index.js",
   "scripts": {
     "test": "node js/test/test-signature.js"
   },

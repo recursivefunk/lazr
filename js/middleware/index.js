@@ -13,7 +13,7 @@ module.exports = (app, path='/lazr/signature') => {
     const params = Object.assign(defaults(), tmpParams);
     Signature({ params }).gen()
       .then((result) => {
-        res.status(200).send(result)
+        res.status(200).json(result)
       })
       .catch((err) => res.status(500).send(err))
   })

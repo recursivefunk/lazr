@@ -1,12 +1,14 @@
 
-exports.client = () => {
-  // Uploader for the browser
-  return require('./client')
+if (!isServer) {
+  exports.client = require('./client')
 }
 
-exports.genSig = (opts) => {
-  const Signature = require('./signature')
-  return Signature(opts).gen()
+exports.genSig = function (opts) {
+  return require('./signature')(opts).gen()
 }
 
 exports.attach = require('./middleware')
+
+function isServer() {
+  return !(typeof window != 'undefined' && window.document)
+}

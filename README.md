@@ -16,7 +16,7 @@ let server
 const express = require('express')
 const Lazr = require('lazr')
 
-// Requests to /lazr/signature/?filename=foo.png will generate 
+// Requests to /lazr/signature/?filename=foo.png will generate
 // an upload signature and url and return it via the response
 Lazr.attach(app, [path='/lazr/signature']/*path is optional*/)
 
@@ -24,8 +24,8 @@ server = app.listen(3000)
 ```
 
 You may want to manually generate signatures to have more control over S3
-parameters. Also, mime types are generated using [node-mime](https://github.com/broofa/node-mime) 
-so if you need more control over that process, you can mount your own route 
+parameters. Also, mime types are generated using [node-mime](https://github.com/broofa/node-mime)
+so if you need more control over that process, you can mount your own route
 
 ```javascript
 const Lazr = require('lazr')
@@ -44,7 +44,7 @@ app.get('/signature', (req, res) => {
   Lazr.genSig({ params })
     .then((result) => {
       // result.url, result.signedRequest
-      res.status(200).send(result)
+      res.status(200).json(result)
     })
     .catch((err) => {
       res.status(500).send(err)
@@ -54,3 +54,15 @@ app.get('/signature', (req, res) => {
 
 ## JavaScript (client)
 
+```javascript
+import { client } from 'Lazr'
+
+// Assume file is a File object. Read more at
+// https://developer.mozilla.org/en-US/docs/Web/API/File
+client('/lazr/signature')
+  .upload(file, file.name)
+  .then((url) => {
+    $(`#image`).attr('src', url)
+  })
+  .catch((err) => alert('oh no!'))
+```

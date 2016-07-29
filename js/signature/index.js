@@ -22,7 +22,7 @@ const Signature = component()
           const key = this._params.Key
           resolve({
             signedRequest: data,
-            url: `https://${bucket}.s3.amazon.com/${key}`
+            url: `https://s3.amazonaws.com/${bucket}/${key}`
           })
         })
       })

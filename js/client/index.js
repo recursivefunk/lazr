@@ -1,77 +1,63 @@
 
 import P from 'bluebird'
-import component from 'stampit'
 
-const Lazr = component()
-  .init(function({ instance }) {
-    this._path = instance.path || '/lazr/signature'
-    this._ready = false
-  })
-  .methods({
-    isReady() {
-      return this._ready
-    },
-
-    send(data) {
+export default (signaturePath) => {
+  return Object.create({
+    upload(data, name) {
       return new P((resolve, reject) => {
-        if (!this._ready) {
-          return reject(Error(`You must obtain a signature first`))
+        this.getSignature(name).then(performUpload)
+
+        function performUpload(spec) {
+          upload(data, spec.signedRequest)
+            .then(() => resolve(spec.url))
+            .catch((err) => reject(err))
         }
-        sendData(data, this._signedRequest, this._url)
-          .then((url) => resolve(url))
-          .catch((err) => reject(err))
       })
     },
 
-    getSignature() {
+    getSignature(filename) {
       return new P((resolve, reject) => {
-        getSignature(this._path)
+        const url = `${signaturePath}?filename=${filename}`
+        request({ url })
           .then((result) => {
-            this._signedRequest = result.signedRequest
-            this._url = result.url
-            this._ready = true
-            resolve()
+            resolve(result)
           })
-          .catch((err) => reject(err))
+          .catch((err) => {
+            reject(Error(err))
+          })
       })
-    }
+    },
   })
+}
 
-export default (opts) => Lazr.create(opts)
+function request(opts) {
+  const { method = 'GET' } = opts
+  const url = opts.url
+  const data = opts.data
 
-
-function sendData(data, signedRequest, url) {
   return new P((resolve, reject) => {
-    const xhr = new XMLHttpRequest();
-    xhr.open('PUT', signedRequest);
+    const xhr = new XMLHttpRequest()
+    xhr.open(method, url)
     xhr.onreadystatechange = () => {
-      if(xhr.readyState === 4){
-        if(xhr.status === 200) {
-          resolve(url)
-        }
-        else{
-          reject(`An error has occured`)
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          let response
+          try {
+            response = JSON.parse(xhr.responseText)
+          } catch (e) {
+            response = xhr.responseText
+          }
+          resolve(response)
+        } else {
+          reject(Error('An error has occured'))
         }
       }
-    };
+    }
     xhr.send(data)
   })
 }
 
-function getSignature(path='/lazr/signature') {
-  return new P((resolve, reject) => {
-    const xhr = new XMLHttpRequest()
-    xhr.open('GET', path)
-
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4) {
-        if (xhr.status === 200) {
-          resolve(xhr)
-        } else {
-          reject(xhr)
-        }
-      }
-    }
-    xhr.send(null)
-  })
+function upload(data, url) {
+  const method = 'PUT'
+  return request({ url, data, method })
 }
