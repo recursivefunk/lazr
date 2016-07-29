@@ -1,9 +1,7 @@
 
 # Lazr [WIP]
 
-## JavaScript
-
-Server
+## JavaScript (server)
 
 ```
 export AMAZON_ACCESS_KEY_ID=myaccesskeyid
@@ -53,4 +51,6 @@ app.get('/signature', (req, res) => {
     })
 })
 ```
+
+## JavaScript (client)
 
