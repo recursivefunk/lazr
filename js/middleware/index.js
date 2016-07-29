@@ -1,14 +1,19 @@
+
+const path = require('path')
 const mime = require('mime')
+const cuid = require('cuid')
 const defaults = require('../lib/defaults')
 const Signature = require('../signature')
 
-module.exports = (app, path='/lazr/signature') => {
-  app.use(path, (req, res) => {
+module.exports = (app, route='/lazr/signature') => {
+  app.use(route, (req, res) => {
     const filename = req.query.filename
     const contentType = mime.lookup(filename)
+    const ext = path.extname(filename)
+    const uniqueKey = cuid()
     const tmpParams = {
       ContentType: contentType,
-      Key: filename
+      Key: `${uniqueKey}${ext}`
     }
     const params = Object.assign(defaults(), tmpParams);
     Signature({ params }).gen()

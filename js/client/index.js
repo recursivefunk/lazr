@@ -19,9 +19,7 @@ export default (signaturePath) => {
       return new P((resolve, reject) => {
         const url = `${signaturePath}?filename=${filename}`
         request({ url })
-          .then((result) => {
-            resolve(result)
-          })
+          .then((result) => resolve(result))
           .catch((err) => {
             reject(Error(err))
           })
