@@ -33,9 +33,7 @@ const Signature = component()
     }
   })
 
-module.exports = (opts) => {
-  return Signature.create(opts)
-}
+module.exports = Signature.create
 
 function checkConfig(ctx) {
   return (ctx._s3 && ctx._params.Key && ctx._params.Key !== '')

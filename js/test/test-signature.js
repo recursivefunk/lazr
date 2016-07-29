@@ -3,9 +3,9 @@ require('dotenv').config({ path: 'js/test/test.env' })
 
 const test = require('tape')
 const cuid = require('cuid')
-const Signature = require('../../index').Signature
+const Lazr = require('../index')
 const getParams  = () => {
-                  return {
+  return {
     Bucket: process.env.LAZR_BUCKET,
     Key: cuid(),
     Expires: 60,
@@ -14,27 +14,11 @@ const getParams  = () => {
   }
 }
 
-test('configuration is false when not configured', (t) => {
-  const sig = Signature()
-  let isConfigured = sig.isConfigured()
-  t.equal(false, isConfigured, 'signature is not configured')
-  t.end();
-})
-
-test('configuration is true when configured', (t) => {
-  const params = getParams()
-  const sig = Signature({ params })
-  let isConfigured = sig.isConfigured()
-  t.equal(true, isConfigured, 'signature is configured')
-  t.end();
-})
-
 test('signature generation works', (t) => {
   const params = getParams()
-  const sig = Signature({ params })
   const key = params.Key
   const bucket = params.Bucket
-  sig.gen()
+  Lazr.genSig({ params })
     .then((result) => {
       const accessKey = process.env.AMAZON_ACCESS_KEY_ID
       const expectedUrl = `https://${bucket}.s3.amazon.com/${key}`
@@ -48,5 +32,4 @@ test('signature generation works', (t) => {
       t.fail(err)
     })
 })
-
 

@@ -30,7 +30,7 @@ parameters. Also, mime types are generated using [node-mime](https://github.com/
 so if you need more control over that process, you can mount your own route 
 
 ```javascript
-const Signature = require('lazr').signature
+const Lazr = require('lazr')
 
 app.get('/signature', (req, res) => {
   const filename = req.params.filename
@@ -43,7 +43,7 @@ app.get('/signature', (req, res) => {
     ACL: 'public-read' // default
   }
 
-  signature({ params }).gen()
+  Lazr.genSig({ params })
     .then((result) => {
       // result.url, result.signedRequest
       res.status(200).send(result)

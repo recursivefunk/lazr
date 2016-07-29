@@ -1,7 +1,12 @@
 
-exports.client= () => {
+exports.client = () => {
   // Uploader for the browser
   return require('./client')
 }
-exports.signature = require('./signature')
+
+exports.genSig = (opts) => {
+  const Signature = require('./signature')
+  return Signature(opts).gen()
+}
+
 exports.attach = require('./middleware')
