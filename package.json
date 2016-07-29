@@ -2,7 +2,7 @@
   "name": "lazr",
   "version": "1.0.0",
   "description": "Direct S3 Uploads",
-  "main": "index.js",
+  "main": "js/index.js",
   "scripts": {
     "test": "node js/test/test-signature.js"
   },
@@ -15,11 +15,13 @@
     "aws-sdk": "^2.4.9",
     "bluebird": "^3.4.1",
     "cuid": "^1.3.8",
+    "mime": "^1.3.4",
     "stampit": "^2.1.1"
   },
   "devDependencies": {
     "dotenv": "^2.0.0",
-    "restify": "^4.1.1",
+    "express": "^4.14.0",
+    "request": "^2.74.0",
     "tape": "^4.6.0"
   }
 }

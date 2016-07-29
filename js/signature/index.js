@@ -22,7 +22,7 @@ const Signature = component()
           const key = this._params.Key
           resolve({
             signedRequest: data,
-            url: `https://${bucket}.s3.amazon.com/${key}`
+            url: `https://s3.amazonaws.com/${bucket}/${key}`
           })
         })
       })
@@ -33,9 +33,7 @@ const Signature = component()
     }
   })
 
-module.exports = (opts) => {
-  return Signature.create(opts)
-}
+module.exports = Signature.create
 
 function checkConfig(ctx) {
   return (ctx._s3 && ctx._params.Key && ctx._params.Key !== '')
