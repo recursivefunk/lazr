@@ -27,7 +27,7 @@ You may want to manually generate signatures to have more control over S3 parame
 ```javascript
 const Lazr = require('lazr')
 
-app.get('/signature', (req, res) => {
+app.get('/lazr/signature', (req, res) => {
   const filename = req.params.filename
   const filetype = determineFiletypeSomehow(filename)
   const params = {
