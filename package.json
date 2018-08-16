@@ -4,7 +4,7 @@
   "description": "Direct S3 Uploads",
   "main": "js/index.js",
   "scripts": {
-    "test": "node js/test/test-signature.js"
+    "test": "node src/test/test-signature.js"
   },
   "author": "Johnny Austin <hi@johnnyray.me>",
   "license": "MIT",

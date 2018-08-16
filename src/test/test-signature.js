@@ -1,5 +1,5 @@
 
-require('dotenv').config({ path: 'js/test/test.env' })
+require('dotenv').config({ path: 'src/test/test.env' })
 
 const test = require('tape')
 const cuid = require('cuid')
