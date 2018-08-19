@@ -1,6 +1,8 @@
 
 # Lazr
 
+[![Circle CI](https://circleci.com/gh/recursivefunk/lazr.png?circle-token=09d1018ae7992b0d555c1e3b78c138d054e9236f)](https://circleci.com/gh/recursivefunk/lazr)
+
 ![laser](https://media2.giphy.com/media/RGz2rvIfZ9hU4/200.gif)
 
 ```
