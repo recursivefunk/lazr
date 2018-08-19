@@ -1,13 +1,13 @@
 
 import P from 'bluebird'
 
-export default (signaturePath) => {
+export default signaturePath => {
   return Object.create({
-    upload(data, name) {
+    upload (data, name) {
       return new P((resolve, reject) => {
         this.getSignature(name).then(performUpload)
 
-        function performUpload(spec) {
+        function performUpload (spec) {
           upload(data, spec.signedRequest)
             .then(() => resolve(spec.url))
             .catch((err) => reject(err))
@@ -15,26 +15,26 @@ export default (signaturePath) => {
       })
     },
 
-    getSignature(filename) {
+    getSignature (filename) {
       return new P((resolve, reject) => {
         const url = `${signaturePath}?filename=${filename}`
         request({ url })
-          .then((result) => resolve(result))
-          .catch((err) => {
+          .then(result => resolve(result))
+          .catch(err => {
             reject(Error(err))
           })
       })
-    },
+    }
   })
 }
 
-function request(opts) {
+function request (opts) {
   const { method = 'GET' } = opts
   const url = opts.url
   const data = opts.data
 
   return new P((resolve, reject) => {
-    const xhr = new XMLHttpRequest()
+    const xhr = new XMLHttpRequest() // eslint-disable-line
     xhr.open(method, url)
     xhr.onreadystatechange = () => {
       if (xhr.readyState === 4) {
@@ -55,7 +55,7 @@ function request(opts) {
   })
 }
 
-function upload(data, url) {
+function upload (data, url) {
   const method = 'PUT'
   return request({ url, data, method })
 }

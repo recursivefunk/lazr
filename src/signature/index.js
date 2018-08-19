@@ -4,12 +4,12 @@ const component = require('stampit')
 const P = require('bluebird')
 
 const Signature = component()
-  .init(function({ instance }) {
+  .init(function ({ instance }) {
     this._s3 = instance.s3 || new aws.S3()
     this._params = instance.params || {}
   })
   .methods({
-    gen() {
+    gen () {
       return new P((resolve, reject) => {
         if (!this.isConfigured()) {
           return reject(`You must configure a key for this signature`)
@@ -28,14 +28,13 @@ const Signature = component()
       })
     },
 
-    isConfigured() {
-      return checkConfig(this) ? true : false
+    isConfigured () {
+      return !!checkConfig(this)
     }
   })
 
 module.exports = Signature.create
 
-function checkConfig(ctx) {
+function checkConfig (ctx) {
   return (ctx._s3 && ctx._params.Key && ctx._params.Key !== '')
 }
-

@@ -4,7 +4,9 @@
   "description": "Direct S3 Uploads",
   "main": "js/index.js",
   "scripts": {
-    "test": "node src/test/test-signature.js"
+    "test": "node src/test/test-signature.js",
+    "lint": "standard src/**/*.js test/**/*.js",
+    "fix": "standard --fix src/**/*.js test/**/*.js"
   },
   "author": "Johnny Austin <hi@johnnyray.me>",
   "license": "MIT",
@@ -22,6 +24,7 @@
     "dotenv": "^2.0.0",
     "express": "^4.14.0",
     "request": "^2.74.0",
+    "standard": "^11.0.1",
     "tape": "^4.6.0"
   }
 }

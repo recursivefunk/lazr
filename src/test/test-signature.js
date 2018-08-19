@@ -4,7 +4,7 @@ require('dotenv').config({ path: 'src/test/test.env' })
 const test = require('tape')
 const cuid = require('cuid')
 const Lazr = require('../index')
-const getParams  = () => {
+const getParams = () => {
   return {
     Bucket: process.env.LAZR_BUCKET,
     Key: cuid(),
@@ -32,4 +32,3 @@ test('signature generation works', (t) => {
       t.fail(err)
     })
 })
-
