@@ -8,7 +8,7 @@ const Signature = require('../signature')
 module.exports = (app, route = '/lazr/signature') => {
   app.use(route, (req, res) => {
     const filename = req.query.filename
-    const contentType = mime.lookup(filename)
+    const contentType = mime.getType(filename)
     const ext = path.extname(filename)
     const uniqueKey = cuid()
     const tmpParams = {
