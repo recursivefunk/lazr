@@ -5,13 +5,12 @@ export default signaturePath => {
   return Object.create({
     upload (data, name) {
       return new P((resolve, reject) => {
-        this.getSignature(name).then(performUpload)
-
-        function performUpload (spec) {
-          upload(data, spec.signedRequest)
-            .then(() => resolve(spec.url))
-            .catch((err) => reject(err))
-        }
+        this.getSignature(name)
+          .then(spec => {
+            upload(data, spec.signedRequest)
+              .then(() => resolve(spec.url))
+              .catch(err => reject(err))
+          })
       })
     },
 
@@ -20,9 +19,7 @@ export default signaturePath => {
         const url = `${signaturePath}?filename=${filename}`
         request({ url })
           .then(result => resolve(result))
-          .catch(err => {
-            reject(Error(err))
-          })
+          .catch(err => reject(Error(err)))
       })
     }
   })

@@ -1,13 +1,13 @@
 
-require('dotenv').config({ path: 'src/test/test.env' })
+require('dotenv').config({ path: 'test/test.env' })
 
 const test = require('tape')
 const request = require('request')
 const express = require('express')
-const Lazr = require('../index')
-const getExpressApp = () => {
-  return express()
-}
+const env = require('good-env')
+const Lazr = require('../src/index')
+const getExpressApp = () => express()
+const bucket = env.get('LAZR_BUCKET')
 
 test('it works', (t) => {
   let server
@@ -25,8 +25,16 @@ test('it works', (t) => {
       let result
       try {
         result = JSON.parse(body)
-        t.ok(result.signedRequest)
-        t.ok(result.url)
+        t.equals(
+          result.signedRequest.startsWith(`https://${bucket}.s3.amazonaws.com`),
+          true,
+          'Signed request points to correct bucket'
+        )
+        t.equals(
+          result.url.startsWith(`https://s3.amazonaws.com/${bucket}`),
+          true,
+          'URL is OK'
+        )
         server.close()
         t.end()
       } catch (err) {

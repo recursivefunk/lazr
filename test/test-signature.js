@@ -1,18 +1,16 @@
 
-require('dotenv').config({ path: 'src/test/test.env' })
+require('dotenv').config({ path: 'test/test.env' })
 
 const test = require('tape')
 const cuid = require('cuid')
-const Lazr = require('../index')
-const getParams = () => {
-  return {
-    Bucket: process.env.LAZR_BUCKET,
-    Key: cuid(),
-    Expires: 60,
-    ContentType: 'application/javascript',
-    ACL: 'public-read'
-  }
-}
+const Lazr = require('../src/index')
+const getParams = () => ({
+  Bucket: process.env.LAZR_BUCKET,
+  Key: cuid(),
+  Expires: 60,
+  ContentType: 'application/javascript',
+  ACL: 'public-read'
+})
 
 test('signature generation works', (t) => {
   const params = getParams()
