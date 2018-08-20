@@ -1,6 +1,6 @@
 
-module.exports = signaturePath = () => {
-  return Object.create({
+const signaturePath = () => (
+  Object.create({
     upload (data, name) {
       return new Promise((resolve, reject) => {
         this.getSignature(name)
@@ -21,7 +21,7 @@ module.exports = signaturePath = () => {
       })
     }
   })
-}
+)
 
 function request (opts) {
   const { method = 'GET' } = opts
@@ -54,3 +54,5 @@ function upload (data, url) {
   const method = 'PUT'
   return request({ url, data, method })
 }
+
+module.exports = signaturePath

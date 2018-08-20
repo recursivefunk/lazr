@@ -6,7 +6,7 @@ const Signature = function ({ s3 = new aws.S3(), params = {} }) {
     gen () {
       return new Promise((resolve, reject) => {
         if (!this.isConfigured()) {
-          return reject(`You must configure a key for this signature`)
+          return reject(Error(`You must configure a key for this signature`))
         }
         s3.getSignedUrl('putObject', params, (err, data) => {
           if (err) {
