@@ -10,7 +10,7 @@ module.exports = (app, route = '/lazr/signature') => {
     const filename = req.query.filename
     const contentType = mime.getType(filename)
     const ext = path.extname(filename)
-    const uniqueKey = cuid()
+    const uniqueKey = req.query.key || cuid()
     const tmpParams = {
       ContentType: contentType,
       Key: `${uniqueKey}${ext}`
@@ -18,7 +18,7 @@ module.exports = (app, route = '/lazr/signature') => {
     const params = Object.assign(defaults(), tmpParams)
     Signature({ params })
       .gen()
-      .then(result => res.status(200).json(result))
+      .then(result => res.status(201).json(result))
       .catch(err => res.status(500).send(err))
   })
 }

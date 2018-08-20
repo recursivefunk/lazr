@@ -1,6 +1,10 @@
 
+const env = require('good-env')
+
+env.ensure('LAZR_BUCKET')
+
 module.exports = () => ({
-  Bucket: process.env.LAZR_BUCKET,
-  Expires: process.env.LAZR_EXPIRES || 60,
-  ACL: 'public-read'
+  Bucket: env.get('LAZR_BUCKET'),
+  Expires: env.getNumber('LAZR_EXPIRES', 60),
+  ACL: env.get('LAZR_ACL', 'private')
 })
