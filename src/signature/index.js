@@ -1,6 +1,13 @@
 
 const aws = require('aws-sdk')
 
+/**
+ * Generate a signed URL for uploading and return it to the client
+ *
+ * @param s3 an instance of the aws.S3 class
+ * @param params parameters for the S3
+ *
+ */
 const Signature = function ({ s3 = new aws.S3(), params = {} }) {
   return Object.create({
     gen () {

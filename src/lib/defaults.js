@@ -1,6 +1,8 @@
 
 const env = require('good-env')
 
+// throw an error if we don't have this
+// configured
 env.ensure('LAZR_BUCKET')
 
 module.exports = () => ({
