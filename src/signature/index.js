@@ -8,6 +8,9 @@ const Signature = function ({ s3 = new aws.S3(), params = {} }) {
         if (!this.isConfigured()) {
           return reject(Error(`You must configure a key for this signature`))
         }
+        if (params.lazrSignatureRoute) {
+          delete params.lazrSignatureRoute
+        }
         s3.getSignedUrl('putObject', params, (err, data) => {
           if (err) {
             return reject(err)

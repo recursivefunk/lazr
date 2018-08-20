@@ -16,7 +16,7 @@ test('signature generation works', (t) => {
   const params = getParams()
   const key = params.Key
   const bucket = params.Bucket
-  Lazr.genSig({ params })
+  Lazr.generateSignature({ params })
     .then((result) => {
       const accessKey = process.env.AMAZON_ACCESS_KEY_ID
       const expectedUrl = `https://s3.amazonaws.com/${bucket}/${key}`

@@ -4,8 +4,9 @@ const mime = require('mime')
 const cuid = require('cuid')
 const defaults = require('../lib/defaults')
 const Signature = require('../signature')
+const signatureRoute = defaults().lazrSignatureRoute
 
-module.exports = (app, route = '/lazr/signature') => {
+module.exports = (app, route = signatureRoute) => {
   app.use(route, (req, res) => {
     const filename = req.query.filename
     const contentType = mime.getType(filename)
@@ -18,7 +19,7 @@ module.exports = (app, route = '/lazr/signature') => {
     const params = Object.assign(defaults(), tmpParams)
     Signature({ params })
       .gen()
-      .then(result => res.status(201).json(result))
+      .then(result => res.status(200).json(result))
       .catch(err => res.status(500).send(err))
   })
 }

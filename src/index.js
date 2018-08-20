@@ -1,7 +1,7 @@
 
 exports.client = require('./client')
 
-exports.genSig = opts => require('./signature')(opts).gen()
+exports.generateSignature = opts => require('./signature')(opts).gen()
 
 exports.attach = require('./middleware')
 
