@@ -7,7 +7,7 @@ const express = require('express')
 const env = require('good-env')
 const Lazr = require('../src/index')
 const getExpressApp = () => express()
-const bucket = env.get('LAZR_BUCKET')
+const bucket = env.get('LAZR_BUCKET', 'LAZR_BUCKET')
 
 test('it works', (t) => {
   let server

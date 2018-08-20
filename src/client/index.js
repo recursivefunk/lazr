@@ -1,10 +1,8 @@
 
-import P from 'bluebird'
-
-export default signaturePath => {
+module.exports = signaturePath = () => {
   return Object.create({
     upload (data, name) {
-      return new P((resolve, reject) => {
+      return new Promise((resolve, reject) => {
         this.getSignature(name)
           .then(spec => {
             upload(data, spec.signedRequest)
@@ -15,7 +13,7 @@ export default signaturePath => {
     },
 
     getSignature (filename) {
-      return new P((resolve, reject) => {
+      return new Promise((resolve, reject) => {
         const url = `${signaturePath}?filename=${filename}`
         request({ url })
           .then(result => resolve(result))
@@ -30,7 +28,7 @@ function request (opts) {
   const url = opts.url
   const data = opts.data
 
-  return new P((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest() // eslint-disable-line
     xhr.open(method, url)
     xhr.onreadystatechange = () => {

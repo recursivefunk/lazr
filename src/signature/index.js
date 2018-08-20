@@ -1,11 +1,10 @@
 
 const aws = require('aws-sdk')
-const P = require('bluebird')
 
 const Signature = function ({ s3 = new aws.S3(), params = {} }) {
   return Object.create({
     gen () {
-      return new P((resolve, reject) => {
+      return new Promise((resolve, reject) => {
         if (!this.isConfigured()) {
           return reject(`You must configure a key for this signature`)
         }

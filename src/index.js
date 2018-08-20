@@ -1,11 +1,7 @@
 
-if (!isServer) {
-  exports.client = require('./client')
-}
+exports.client = require('./client')
 
-exports.genSig = function (opts) {
-  return require('./signature')(opts).gen()
-}
+exports.genSig = opts => require('./signature')(opts).gen()
 
 exports.attach = require('./middleware')
 
